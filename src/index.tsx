@@ -5,7 +5,7 @@ import { pl } from "date-fns/locale";
 
 const app = new Hono();
 
-const nonTradingSundays = [
+const tradingSundays = [
     // 2025
     "2025-01-26",
     "2025-04-13",
@@ -89,7 +89,7 @@ const HomePage: FC<{ year: number }> = (props) => {
                             Lista niedziel handlowych
                         </h2>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {nonTradingSundays.map((date) => {
+                            {tradingSundays.map((date) => {
                                 const dateObj = new Date(date);
                                 return (
                                     <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
@@ -122,8 +122,7 @@ const HomePage: FC<{ year: number }> = (props) => {
                                 </h3>
                                 <p class="text-gray-600">
                                     W {props.year} roku jest{" "}
-                                    {nonTradingSundays.length} niedziel
-                                    handlowych.
+                                    {tradingSundays.length} niedziel handlowych.
                                 </p>
                             </div>
                             <div class="bg-white p-6 rounded-xl shadow-sm">
@@ -176,7 +175,7 @@ app.get("/calendar", (c) => {
         "X-WR-CALNAME:Niedziele Handlowe",
     ];
 
-    for (const sundayISO of nonTradingSundays) {
+    for (const sundayISO of tradingSundays) {
         const dateStr = format(sundayISO, "yyyyMMdd");
         const nextDayStr = format(addDays(sundayISO, 1), "yyyyMMdd");
 
